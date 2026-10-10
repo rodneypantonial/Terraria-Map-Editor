@@ -95,7 +95,7 @@ jobs:
           "@
 
           $body | Out-File -FilePath release-notes.md -Encoding utf8
-          gh release edit ${{ github.ref_name }} --notes-file release-notes.md ${{ contains(github.ref_name, '-') && '--prerelease' || '' }}
+          gh release edit ${{ github.ref_name }} --notes-file release-notes.md ${{ (contains(github.ref_name, '-alpha') || contains(github.ref_name, '-beta') || contains(github.ref_name, '-rc')) && '--prerelease' || '' }}
           gh release upload ${{ github.ref_name }} release/TEdit*.zip API_REFERENCE.md --clobber
 
       - name: Notify docs site

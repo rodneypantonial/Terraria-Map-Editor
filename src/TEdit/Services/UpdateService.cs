@@ -10,7 +10,8 @@ namespace TEdit.Services;
 
 public class UpdateService
 {
-    private const string GithubRepo = "https://github.com/TEdit/Terraria-Map-Editor";
+    // Fork build: update from this fork's releases, so updates keep its features.
+    private const string GithubRepo = "https://github.com/rodneypantonial/Terraria-Map-Editor";
 
     // Serialize all Velopack operations across instances to avoid lock file contention
     private static readonly SemaphoreSlim _updateLock = new(1, 1);

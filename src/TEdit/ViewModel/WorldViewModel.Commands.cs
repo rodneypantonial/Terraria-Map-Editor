@@ -267,7 +267,7 @@ public partial class WorldViewModel
             if (!updateService.IsInstalled)
             {
                 // Not a Velopack install (portable zip user) — open download page
-                var process = new System.Diagnostics.ProcessStartInfo("https://github.com/TEdit/Terraria-Map-Editor/releases");
+                var process = new System.Diagnostics.ProcessStartInfo("https://github.com/rodneypantonial/Terraria-Map-Editor/releases");
                 process.UseShellExecute = true;
                 System.Diagnostics.Process.Start(process);
                 return;
