@@ -960,7 +960,7 @@ public partial class MainWindow : FluentWindow
         this.MapView.ZoomFocus(mapPointX, mapPointY);
     }
 
-    private void WorldFileDrop(object sender, DragEventArgs e)
+    private async void WorldFileDrop(object sender, DragEventArgs e)
     {
         if (e.Data.GetDataPresent(DataFormats.FileDrop))
         {
@@ -968,7 +968,8 @@ public partial class MainWindow : FluentWindow
 
             string filelocation = Path.GetFullPath(files[0]);
 
-            _vm.LoadWorld(filelocation);
+            if (await _vm.ConfirmDiscardUnsavedChangesAsync())
+                _vm.LoadWorld(filelocation);
         }
     }
 
