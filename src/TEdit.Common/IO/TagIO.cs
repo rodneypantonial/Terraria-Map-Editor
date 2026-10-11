@@ -174,7 +174,7 @@ public static class TagIO
             byte[] chunk = reader.ReadBytes((int)Math.Min(length - buffer.Length, MaxPreallocate));
             if (chunk.Length == 0)
                 throw new EndOfStreamException($"Byte array of {length} bytes is truncated at {buffer.Length} bytes");
-            buffer.Write(chunk);
+            buffer.Write(chunk, 0, chunk.Length);
         }
         return buffer.ToArray();
     }
