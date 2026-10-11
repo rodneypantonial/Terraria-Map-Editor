@@ -8,8 +8,6 @@ using Xunit;
 
 namespace TEdit.Tests.Clipboard;
 
-// UndoManager keeps its temp files in one static folder, so its users must not run in parallel.
-[Collection("UndoManager")]
 public sealed class ChestPasteUndoRegressionTests
 {
     [Fact]
