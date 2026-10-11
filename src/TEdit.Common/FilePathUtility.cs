@@ -55,9 +55,11 @@ public static class FilePathUtility
     {
         string fullPath = Path.GetFullPath(NormalizeWorldFilePath(worldPath));
         // Windows paths are case-insensitive: the same world must always get the same key.
-        byte[] hash = System.Security.Cryptography.SHA256.HashData(
-            System.Text.Encoding.UTF8.GetBytes(fullPath.ToUpperInvariant()));
-        return $"{Path.GetFileNameWithoutExtension(fullPath)}.{Convert.ToHexString(hash, 0, 4).ToLowerInvariant()}";
+        // netstandard2.0-compatible: no SHA256.HashData / Convert.ToHexString.
+        using var sha = System.Security.Cryptography.SHA256.Create();
+        byte[] hash = sha.ComputeHash(System.Text.Encoding.UTF8.GetBytes(fullPath.ToUpperInvariant()));
+        string hex = BitConverter.ToString(hash, 0, 4).Replace("-", "").ToLowerInvariant();
+        return $"{Path.GetFileNameWithoutExtension(fullPath)}.{hex}";
     }
 
     /// <summary>
