@@ -47,6 +47,20 @@ public static class FilePathUtility
     }
 
     /// <summary>
+    /// Name for a world's backups and autosaves: the file stem plus a short hash of the full path,
+    /// e.g. "World_1.1a2b3c4d". The hash keeps worlds with the same name in different folders
+    /// (local and Steam Cloud) from overwriting or pruning each other's backups.
+    /// </summary>
+    public static string GetBackupKey(string worldPath)
+    {
+        string fullPath = Path.GetFullPath(NormalizeWorldFilePath(worldPath));
+        // Windows paths are case-insensitive: the same world must always get the same key.
+        byte[] hash = System.Security.Cryptography.SHA256.HashData(
+            System.Text.Encoding.UTF8.GetBytes(fullPath.ToUpperInvariant()));
+        return $"{Path.GetFileNameWithoutExtension(fullPath)}.{Convert.ToHexString(hash, 0, 4).ToLowerInvariant()}";
+    }
+
+    /// <summary>
     /// Formats a byte count as a human-readable string.
     /// </summary>
     public static string FormatFileSize(long bytes)
